@@ -3,4 +3,4 @@ title: KYC Solutions
 version: master
 nav:
 - modules/ROOT/nav.adoc
-- modules/one/nav.adoc
+- modules/module-one/nav.adoc

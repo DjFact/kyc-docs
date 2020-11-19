@@ -1,1 +1,0 @@
-* xref:{docdir}/one/nav.adoc[Welcome]

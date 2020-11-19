@@ -1,32 +1,80 @@
 = Welcome to KYC Solutions!
 
-This is the automatic start page for version *{page-component-version}* of Component B.
+Welcome to KYC! This documentation will help you understand how our solutions work and how you can integrate KYC into your website, app, or signup flow.
+Also, it will explain various kinds of verification services included in this service pack, how they are provided and what kind of data is required from our clients to perform these verifications successfully
 
-Component B is one of two documentation components in the Antora Demo.
-The other docs component, Component A, can be accessed via the component selector menu (aka component drawer) at the bottom of the menu on the left side of the page.
+== What is KYC?
 
-== Page source
+KYC (Know Your Customer) is today a significant element in the fight against financial crime and money laundering and *customer identification* is the most critical aspect as it is the first step to better perform in the other stages of the process.
 
-This page is sourced from the AsciiDoc file named [.path]_index.adoc_ that is located at [.path]_demo-component-b/docs/modules/ROOT/pages_.
+== What KYC provides?
 
-=== Why is this the home page of Component B?
+We provide *Real-time Identity Verification Services* in order to know your customer identity eliminates risks, online frauds, and financial crimes. Verify ID Documents, Selfies, Biometric data and Mobile 2FA from anywhere in only 1 minute.
 
-This page is automatically used as the start page of Component B because it is stored in the ROOT module and named [.path]_index.adoc_.
+== What services KYC includes?
 
-=== Why is this the home page of the Antora Demo site?
+[bibliography]
+=== Document Verification
+Verify over 6000 ID types from 190 countries
 
-This page is used as the home page for the Antora Demo because it is assigned as the site `start_page` in the Demo site's playbook file [.path]_site.yml_.
+.Document type identification
+====
+Automatically determine document issuing country, type and series.
+====
 
-== Cross reference syntax to target this page
+.MRZ reading
+====
+Capture data from Machine Readable Zone (MRZ) of any Passport, ID, Visa and other documents promptly and accurately.
+====
 
-To create a cross reference *to this page from another page in the ROOT module of Component B*, the xref syntax would be `\xref:index.adoc[]`.
+.OCR
+====
+Extract data from any identity document. Extract text data from anywhere. Automatically.
+====
 
-To create a cross reference *to this page from a page in Module One of Component B*, the xref syntax would be `\xref:ROOT:index.adoc[]`.
+.Data verification
+====
+Cross check and verify all data read from the document and perform lexical analysis.
+====
 
-=== Always target the latest version of this page
+.Identity document authentication
+====
+Check visible security features in an ID document in order to decide whether it is genuine and valid.
+====
 
-To create a cross reference *to the latest version of this page from a page in Component A*, the xref syntax would be `\xref:component-b::index.adoc[]`.
+.Electronic Document Authentication
+====
+Read data from RFID chips built in electronic documents (ePassport, eID and eDL) via NFC and perform all required authentications (CA, AA, TA, PA). BSI certified.
+====
 
-=== Target a specific version of this page
 
-To create a cross reference *to version 1.0 of this page from a page in Component A*, the xref syntax would be `\xref:1.0@component-b::index.adoc[]`.
+[bibliography]
+=== Face Recognition
+
+.Verify Remote Presence of User
+====
+Biometric information is extracted from photos and non-disruptive background video (optional) to confirm that a user is who they say they are.
+====
+
+.Liveness Detection
+====
+Perform liveness check using a selfie taken with the user’s smartphone.
+====
+
+.Face Matching
+====
+Compare the person holding the ID to the person pictured in the ID document (1:1).
+====
+
+[bibliography]
+=== Video calls
+
+.Video call by schedule
+====
+Make video call by schedule. Calendars of all operators are synchronize with SDK.
+====
+
+.Record call
+====
+Record and store all video verifications on your own repository.
+====

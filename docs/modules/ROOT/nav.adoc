@@ -1,1 +1,2 @@
 * xref:index.adoc[Intoduction]
+* xref:how-it-works.adoc[How It Works?]

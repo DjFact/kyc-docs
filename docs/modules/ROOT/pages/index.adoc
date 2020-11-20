@@ -1,7 +1,7 @@
 = Welcome to KYC Solutions!
 
 Welcome to KYC! This documentation will help you understand how our solutions work and how you can integrate KYC into your website, app, or signup flow.
-Also, it will explain various kinds of verification services included in this service pack, how they are provided and what kind of data is required from our clients to perform these verifications successfully
+Also, it will explain various kinds of verification services included in this service pack, how they are provided and what kind of data is required from our clients to perform these verifications successfully.
 
 == What is KYC?
 
@@ -13,68 +13,40 @@ We provide *Real-time Identity Verification Services* in order to know your cust
 
 == What services KYC includes?
 
-[bibliography]
 === Document Verification
 Verify over 6000 ID types from 190 countries
 
-.Document type identification
-====
+*_Document type identification_*::
 Automatically determine document issuing country, type and series.
-====
 
-.MRZ reading
-====
+*_MRZ reading_*::
 Capture data from Machine Readable Zone (MRZ) of any Passport, ID, Visa and other documents promptly and accurately.
-====
 
-.OCR
-====
+*_OCR_*::
 Extract data from any identity document. Extract text data from anywhere. Automatically.
-====
 
-.Data verification
-====
+*_Data verification_*::
 Cross check and verify all data read from the document and perform lexical analysis.
-====
 
-.Identity document authentication
-====
+*_Identity document authentication_*::
 Check visible security features in an ID document in order to decide whether it is genuine and valid.
-====
 
-.Electronic Document Authentication
-====
+*_Electronic Document Authentication_*::
 Read data from RFID chips built in electronic documents (ePassport, eID and eDL) via NFC and perform all required authentications (CA, AA, TA, PA). BSI certified.
-====
 
-
-[bibliography]
 === Face Recognition
-
-.Verify Remote Presence of User
-====
+*_Verify Remote Presence of User_*::
 Biometric information is extracted from photos and non-disruptive background video (optional) to confirm that a user is who they say they are.
-====
 
-.Liveness Detection
-====
+*_Liveness Detection_*::
 Perform liveness check using a selfie taken with the user’s smartphone.
-====
 
-.Face Matching
-====
+*_Face Matching_*::
 Compare the person holding the ID to the person pictured in the ID document (1:1).
-====
 
-[bibliography]
 === Video calls
-
-.Video call by schedule
-====
+*_Video call by schedule_*::
 Make video call by schedule. Calendars of all operators are synchronize with SDK.
-====
 
-.Record call
-====
+*_Record call_*::
 Record and store all video verifications on your own repository.
-====

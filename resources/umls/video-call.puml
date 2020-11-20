@@ -1,0 +1,54 @@
+@startuml
+    title VIDEO CALL PROCESS
+
+    actor "Client (Mobile SDK/Web SDK)" as Client
+    box "Merchant Application Area" #efefef
+        participant "Application" as Server
+        database "DB" as DB
+        participant "Media Server" as Media
+        actor Operator
+    end box
+
+    activate Server
+        ref over Client, Server, Media, Operator : Video streaming process
+        Server -[#green]-> Client : VIDEO CALL COMMIT
+        Server -[#gray]> Media : convert and save video call
+    deactivate Server
+    activate Media
+        Operator -[#gray]> Server : send request to change user verification status
+        activate Server
+            break bad status
+                Server --x Operator : BAD STATUS ERROR
+            end
+            Server -[#gray]> DB : TRANSACTION BEGIN
+            Server -[#gray]>o Server : update <b>user</b> fields
+            note right #ffffff
+                --update user fields--
+                set <b>user.status</b>
+            end note
+            Server -[#gray]> DB : TRANSACTION COMMIT
+            activate DB
+                DB -[#gray]-> Server : result
+            deactivate DB
+        deactivate Server
+        Media -[#gray]-> Server : return media files path and names
+    deactivate Media
+    activate Server
+        alt #e6f2ff bad media files
+            Server --x Media : BAD MEDIA FILES ERROR
+            activate Media
+            Media -[#gray]>o Media : convert and save video call
+        end
+        deactivate Media
+        Server -[#gray]> DB : TRANSACTION BEGIN
+        Server -[#gray]>o Server : update <b>user</b> fields
+        note right #ffffff
+            --update user fields--
+            set <b>user.media_files</b>
+        end note
+        Server -[#gray]> DB : TRANSACTION COMMIT
+        activate DB
+            DB -[#gray]-> Server : result
+        deactivate DB
+    deactivate Server
+@enduml

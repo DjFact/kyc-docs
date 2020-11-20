@@ -1,0 +1,43 @@
+@startuml
+    title CONTRACT SIGN PROCESS
+
+    actor "Client (Mobile SDK/Web SDK)" as Client
+    box "Merchant Application Area" #efefef
+        participant "Application" as Server
+        database "DB" as DB
+        actor Operator
+    end box
+
+    Operator -[#gray]> Server : upload file of contract
+    activate Server
+        Server -[#gray]>o Server : save file of contract
+        Server -[#gray]> DB : TRANSACTION BEGIN
+        Server -[#gray]>o Server : update <b>user</b> fields
+        note right #ffffff
+            --update user fields--
+            set <b>user.contract_file</b>
+        end note
+        Server -[#gray]> DB : TRANSACTION COMMIT
+        activate DB
+            DB -[#gray]-> Server : result
+        deactivate DB
+        Server -[#gray]> Client : send file of contract
+    deactivate Server
+    Client -[#gray]> Server : send request to sign contract
+    activate Server
+        Server -[#gray]>o Server : sign file of contract
+        Server -[#gray]>o Server : save file of contract
+        Server -[#gray]> DB : TRANSACTION BEGIN
+        Server -[#gray]>o Server : update <b>user</b> fields
+        note right #ffffff
+            --update user fields--
+            set <b>user.status</b> = SUCCESS
+        end note
+        Server -[#gray]> DB : TRANSACTION COMMIT
+        activate DB
+            DB -[#gray]-> Server : result
+        deactivate DB
+        Server -[#green]-> Client : CONTRACT COMMIT
+        Server -[#green]-> Operator : CONTRACT COMMIT
+    deactivate Server
+@enduml

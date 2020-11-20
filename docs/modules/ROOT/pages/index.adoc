@@ -14,7 +14,7 @@ We provide *Real-time Identity Verification Services* in order to know your cust
 == What services KYC includes?
 
 === Document Verification
-Verify over 6000 ID types from 190 countries
+8883 document templates included from 246 countries/territories
 
 *_Document type identification_*::
 Automatically determine document issuing country, type and series.

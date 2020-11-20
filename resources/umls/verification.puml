@@ -1,0 +1,69 @@
+@startuml
+    title VERIFICATION PROCESS
+
+    actor "Client (Mobile SDK/Web SDK)" as Client
+    box "Merchant Application Area" #efefef
+        participant "Application" as Server
+        database "DB" as DB
+        actor Operator
+    end box
+    participant "Third-party APIs" as API
+
+    alt #e6f2ff Use Third-party APIs
+        ref over Client, Server, API : Verification Process with Third-party APIs
+    else on device
+        ref over Client : Verification Process (without video call)
+    end
+    Client -[#gray]> Server : send verification pack request
+    activate Server
+	break empty or not valid data pack
+    	Server --x Client : BAD VERIFICATION DATA ERROR
+	end
+	Server -[#gray]-> DB : TRANSACTION BEGIN
+	Server -[#gray]>o Server : create new <b>user</b>
+	note right #ffffff
+    	--fill user fields--
+    	set <b>user.document_data</b>
+    	set <b>user.document_photo</b>
+    	set <b>user.selfie</b>
+    	set <b>user.questionnaire</b>
+    	set <b>user.signature</b>
+    	set <b>user.status</b> = NEW
+    	set <b>user.ip</b>
+    	set <b>user.app_version</b>
+    	set <b>user.device_info</b>
+    	set <b>user.created</b> = TIMESTAMP()
+    end note
+    Server -[#gray]> DB : TRANSACTION COMMIT
+	activate DB
+		DB -[#gray]-> Server : result
+	deactivate DB
+	Server -[#gray]> Operator : send new verification request
+	deactivate Server
+    Operator -[#gray]> Server : send request to take application to work
+    activate Server
+    break not empty document_data and it is not valid
+        Server --x Operator : BAD DOCUMENT DATA ERROR
+    end
+    Server -[#gray]> DB : TRANSACTION COMMIT
+    alt #e6f2ff user has only old type of passport
+        Server -[#gray]>o Server : update <b>user</b> fields
+        note right #ffffff
+            --update user fields--
+            set <b>user.document_data</b>
+        end note
+    end
+    Server -[#gray]>o Server : update <b>user</b> fields
+    note right #ffffff
+    	--update user fields--
+    	set <b>user.status</b> = VERIFYING
+    	set <b>user.updated</b> = TIMESTAMP()
+    end note
+    Server -[#gray]> DB : TRANSACTION COMMIT
+	activate DB
+	DB -[#gray]-> Server : result
+	deactivate DB
+	Server -[#green]-> Client : VERIFICATION COMMIT
+	Server -[#green]-> Operator : VERIFICATION COMMIT
+	deactivate Server
+@enduml

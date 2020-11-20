@@ -1,182 +1,31 @@
 @startuml
-title Authentication
+    title FULL PROCESS
 
-actor Client
-box "Merchant Application Area" #efefef
-	participant "SDK (Mobile/Web)" as SDK
-	participant "Application" as Server
-	database "DB" as DB
-	actor Operator
-end box
-collections "Merchant System" as SYS
-participant "KYC Application" as KYC
+    actor "Client (Mobile SDK/Web SDK)" as Client
+    box "Merchant Application Area" #efefef
+        participant "Application" as Server
+        database "DB" as DB
+        actor Operator
+    end box
+    participant "Third-party APIs" as API
+    collections "Merchant System" as Bank
+    participant "KYC Application" as KYC
 
-Client -[#gray]> SDK : enter authentication data for 2FA
-activate SDK
-	break 2FA data empty ot not valid
-    	Code --x Client : BAD AUTH DATA ERROR
-	end
-	deactivate SDK
-	SDK -[#gray]> Server : send auth request for CURRENT user
-	activate Server
-	Server -[#gray]>o Server : send 2FA auth data
-	deactivate Server
-	Server -[#gray]-> SDK : AUTH DATA HAS BEEN SEND
-	SDK -[#gray]-> Client : get OTP password
-	break CURRENT user not found
-        Code --x Client : BAD REQUEST ERROR
-    end
-	Client -[#gray]-> SDK : verify OTP password
-	break CURRENT user not found
-    	Code --x Client : BAD REQUEST ERROR
-	end
-	break user is not active (status == "0")
-    	Code --x Client : INVALIDATE AUTHORITY
-	end
+    activate Server
+        ref over Client, Server, DB, API : TWO-FACTOR AUTHENTICATION
+        ref over Client, Server, DB, API, Bank : VERIFICATION PROCESS
+        ref over Client, Server, DB : CALENDAR SYNCHRONIZATION PROCESS
+        ref over Client, Server, DB, Operator : VIDEO CALL PROCESS
+        ref over Client, Server, DB, Operator : CONTRACT SIGN PROCESS
 
-	ref over Code, DB : Device info service
-
-	Code -[#gray]> DB : find CURRENT <b>user_session</b> by <b>user.id</b>
-	activate DB
-		DB -[#gray]-> Code : <b>user_session</b> or NULL
-		Code -[#gray]-> DB : TRANSACTION BEGIN
-	deactivate DB
-	alt #e6f2ff session not found
-		Code -[#gray]>o Code : create new <b>user_session</b>
-		note right #efefef
-			--fill user_session fields--
-			set <b>user_session.user_id</b> = user.id
-			set <b>user_session.ip</b> = ip
-			set <b>user_session.country</b> = country
-			set <b>user_session.region</b> = region
-			set <b>user_session.app_version</b> = app_version
-			set <b>user_session.device_info</b> = device_info
-			set <b>user_session.last_login</b> = TIMESTAMP()
-			set <b>user_session.updated</b> = TIMESTAMP()
-		end note
-	else session found
-		Code -[#gray]>o Code : update <b>user_session</b> fields
-		note right #efefef
-			--update user_session fields--
-			set <b>user_session.ip</b> = ip
-			set <b>user_session.country</b> = country
-			set <b>user_session.region</b> = region
-			set <b>user_session.app_version</b> = app_version
-			set <b>user_session.device_info</b> = device_info
-			set <b>user_session.last_login</b> = TIMESTAMP()
-			set <b>user_session.updated</b> = TIMESTAMP()
-		end note
-	end
-	Code -[#gray]> DB : TRANSACTION COMMIT
-	activate DB
-		DB -[#gray]-> Code : result
-	deactivate DB
-    Code -[#green]-> Client : VALID RESPONSE
-deactivate Code
-@enduml
-
-
-@startuml
-title Device info service
-box "Application" #efefef
-	participant "Application Code" as Code
-	database "Application DB" as DB
-end box
-
-alt #e6f2ff mobile client
-		Code -[#gray]> DB : find <b>mobile device</b> by <b>uid</b>
-		activate DB
-			DB -[#gray]->o Code : <b>mobile device</b> or NULL
-			Code -[#gray]-> DB : TRANSACTION BEGIN
-		deactivate DB
-		alt #ffe7cf mobile device found
-			Code -[#gray]>o Code : update <b>device_mobile</b> fields
-			note right #efefef
-				--update device_mobile fields--
-				set <b>device_mobile.os</b> = device_info.os
-				set <b>device_mobile.advertising_identifier</b> = device_info.advertising_identifier
-				set <b>device_mobile.push_device_token</b> = device_info.push_device_token
-				set <b>device_mobile.updated</b> = TIMESTAMP()
-			end note
-		else there is no any mobile devices
-			alt #fffef2 platform == "android"
-				Code -[#gray]>o Code : create new <b>device_android_info</b>
-				note right #efefef
-					--fill device_android_info fields--
-					set <b>device_android_info.udid</b> = device_info.udid
-					set <b>device_android_info.id_telefonia</b> = device_info.id_telefonia
-					set <b>device_android_info.mac</b> = device_info.mac
-					--fill device_mobile fields--
-					set <b>device_mobile.android_info_id</b> = device_android_info.id
-				end note
-			else platform == "ios"
-				Code -[#gray]>o Code : create new <b>device_ios_info</b>
-				note right #efefef
-					--fill device_ios_info fields--
-					set <b>device_ios_info.identifier_for_vendor</b> = device_info.identifier_for_vendor
-					set <b>device_ios_info.open_udid</b> = device_info.open_udid
-					--fill device_mobile fields--
-					set <b>device_mobile.ios_info_id</b> = device_ios_info.id
-				end note
-			else platform == "windows"
-				Code -[#gray]>o Code : create new <b>device_windows_info</b>
-				note right #efefef
-					--fill device_windows_info fields--
-					set <b>device_windows_info.udid</b> = device_info.udid
-					set <b>device_windows_info.device_unique_identifier</b> = device_info.device_unique_identifier
-					set <b>device_windows_info.device_vendor</b> = device_info.device_vendor
-					--fill device_mobile fields--
-					set <b>device_mobile.windows_info_id</b> = device_windows_info.id
-				end note
-			end
-			Code -[#gray]>o Code : create new <b>device_mobile</b>
-			note right #efefef
-				--fill device_mobile fields--
-				set <b>device_mobile.user_id</b> = user.id
-				set <b>device_mobile.uid</b> = device_info.uid
-				set <b>device_mobile.device_type</b> = device_info.device_type
-				set <b>device_mobile.device_model</b> = device_info.device_model
-				set <b>device_mobile.os</b> = device_info.os
-				set <b>device_mobile.advertising_identifier</b> = device_info.advertising_identifier
-				set <b>device_mobile.push_device_token</b> = device_info.push_device_token
-				set <b>device_mobile.updated</b> = TIMESTAMP()
-				set <b>device_mobile.created</b> = TIMESTAMP()
-			end note
-		end
-		Code -[#gray]> DB : TRANSACTION COMMIT
-		activate DB
-			DB -[#gray]-> Code : result
-		deactivate DB
-	else browser
-		Code -[#gray]> DB : find <b>browser device</b> by <b>user_id</b>
-		activate DB
-			DB -[#gray]->o Code : <b>browser device</b> or NULL
-			Code -[#gray]-> DB : TRANSACTION BEGIN
-		deactivate DB
-		alt #f2e6ff browser device found
-			Code -[#gray]>o Code : update <b>device_browser</b> fields
-			note right #efefef
-				--update device_browser fields--
-				set <b>device_browser.user_agent</b> = device_info.user_agent
-				set <b>device_browser.browser</b> = device_info.browser
-				set <b>device_browser.version</b> = device_info.version
-				set <b>device_browser.updated</b> = TIMESTAMP()
-			end note
-		else there is no any browsers
-			Code -[#gray]>o Code : create new <b>device_browser</b>
-			note right #efefef
-				--fill device_browser fields--
-				set <b>device_browser.user_id</b> = user.id
-				set <b>device_browser.user_agent</b> = device_info.user_agent
-				set <b>device_browser.browser</b> = device_info.browser
-				set <b>device_browser.version</b> = device_info.version
-				set <b>device_browser.updated</b> = TIMESTAMP()
-				set <b>device_browser.created</b> = TIMESTAMP()
-			end note
-		end
-		Code -[#gray]> DB : TRANSACTION COMMIT
-		activate DB
-			DB -[#gray]-> Code : result
-		deactivate DB
-	end
+        Server -[#green]-> Client : VERIFICATION PROCESS COMPLETED
+        Server -[#gray]> Bank : send new verified user data pack
+        activate Bank
+            Bank -[#gray]-> Server : ok
+        deactivate Bank
+        Server -[#green]> KYC : synchronize success transaction
+        activate KYC
+            KYC -[#gray]-> Server : ok
+        deactivate KYC
+    deactivate Server
 @enduml

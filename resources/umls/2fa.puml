@@ -1,0 +1,36 @@
+@startuml
+    title TWO-FACTOR AUTHENTICATION
+
+    actor "Client (Mobile SDK/Web SDK)" as Client
+    box "Merchant Application Area" #efefef
+        participant "Application" as Server
+    end box
+    participant "Third-party APIs" as API
+
+    Client -[#gray]> Server : send 2FA request
+    activate Server
+    break phone number empty or not valid
+        Server --x Client : BAD AUTH DATA ERROR
+    end
+    Server -[#gray]> API : send auth request for CURRENT user
+    activate API
+    API -[#gray]>o API : send OTP password
+    API -[#gray]-> Server : AUTH DATA HAS BEEN SEND
+    deactivate API
+    Server -[#gray]-> Client : ok
+    deactivate Server
+    Client -[#gray]> Server : send OTP request
+    activate Server
+    break OTP password is empty
+        Server --x Client : BAD AUTH DATA ERROR
+    end
+    Server -[#gray]-> API : verify OTP password
+    activate API
+    break OTP password is not valid
+        API --x Server : INVALIDATE AUTHORITY
+    end
+    API -[#gray]-> Server : ok
+    deactivate API
+    Server -[#green]-> Client : AUTHENTICATION COMPLETED
+    deactivate Server
+@enduml

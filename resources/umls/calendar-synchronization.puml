@@ -1,0 +1,31 @@
+@startuml
+    title CALENDAR SYNCHRONIZATION PROCESS
+
+    actor "Client (Mobile SDK/Web SDK)" as Client
+    box "Merchant Application Area" #efefef
+        participant "Application" as Server
+        database "DB" as DB
+    end box
+
+    Client -[#gray]> Server : synchronize with calendar of operators
+    activate Server
+        break empty user request data
+            Server --x Client : REQUEST VERIFICATION ERROR
+        end
+        Server -[#gray]> DB : find <b>user</b>
+        activate DB
+            DB -[#gray]->o Server : <b>user</b> or NULL
+        deactivate DB
+        break user == NULL or user.status != VERIFYING
+            Server --x Client : VERIFICATION USER ERROR
+        end
+        Server -[#gray]> DB : get calendar data
+        activate DB
+            DB -[#gray]->o Server : result or NULL
+        deactivate DB
+        break empty calendar data
+            Server --x Client : CALENDAR SYNCHRONIZATION ERROR
+        end
+        Server -[#green]-> Client : CALENDAR SYNCHRONIZATION DATA
+    deactivate Server
+@enduml

@@ -1,5 +1,9 @@
+= How It Works?
+
+[plantuml,format=svg,role=sequence]
+----
 @startuml
-    title FULL PROCESS
+title FULL PROCESS
 
     actor "Client (Mobile SDK/Web SDK)" as Client
     box "Merchant Application Area" #efefef
@@ -29,3 +33,4 @@
         deactivate KYC
     deactivate Server
 @enduml
+----

@@ -10,4 +10,10 @@ ui:
   bundle:
     url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/master/raw/build/ui-bundle.zip?job=bundle-stable
     snapshot: true
-  supplemental_files: ./resources/supplemental_ui
+  supplemental_files: ./assets/supplemental_ui
+
+asciidoc:
+  attributes:
+    plantuml-server-url: http://www.plantuml.com/plantuml
+  extensions:
+    - asciidoctor-plantuml

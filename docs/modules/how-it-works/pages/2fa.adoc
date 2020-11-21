@@ -1,5 +1,9 @@
+= Two-Factor Authentication
+
+[plantuml,format=svg,role=sequence]
+----
 @startuml
-    title TWO-FACTOR AUTHENTICATION
+title TWO-FACTOR AUTHENTICATION
 
     actor "Client (Mobile SDK/Web SDK)" as Client
     box "Merchant Application Area" #efefef
@@ -28,9 +32,11 @@
     activate API
     break OTP password is not valid
         API --x Server : INVALIDATE AUTHORITY
+        Server --x Client : INVALIDATE AUTHORITY
     end
     API -[#gray]-> Server : ok
     deactivate API
     Server -[#green]-> Client : AUTHENTICATION COMPLETED
     deactivate Server
 @enduml
+----

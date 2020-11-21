@@ -1,3 +1,7 @@
+= Calendar Synchronization
+
+[plantuml,format=svg,role=sequence]
+----
 @startuml
     title CALENDAR SYNCHRONIZATION PROCESS
 
@@ -29,3 +33,4 @@
         Server -[#green]-> Client : CALENDAR SYNCHRONIZATION DATA
     deactivate Server
 @enduml
+----

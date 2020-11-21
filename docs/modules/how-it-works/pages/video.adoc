@@ -1,3 +1,7 @@
+= Video Call Verification
+
+[plantuml,format=svg,role=sequence]
+----
 @startuml
     title VIDEO CALL PROCESS
 
@@ -52,3 +56,4 @@
         deactivate DB
     deactivate Server
 @enduml
+----

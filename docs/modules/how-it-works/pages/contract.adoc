@@ -1,3 +1,7 @@
+= Contract Sign
+
+[plantuml,format=svg,role=sequence]
+----
 @startuml
     title CONTRACT SIGN PROCESS
 
@@ -41,3 +45,4 @@
         Server -[#green]-> Operator : CONTRACT COMMIT
     deactivate Server
 @enduml
+----

@@ -17,3 +17,7 @@ asciidoc:
     plantuml-server-url: http://www.plantuml.com/plantuml
   extensions:
     - asciidoctor-plantuml
+
+runtime:
+  cache_dir: ./cache
+  fetch: true

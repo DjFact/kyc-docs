@@ -3,7 +3,7 @@ site:
   start_page: kyc::index.adoc
 content:
   sources:
-  - url: .
+  - url: https://github.com/DjFact/kyc-docs
     branches: master
     start_path: docs
 ui:

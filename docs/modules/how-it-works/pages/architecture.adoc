@@ -2,4 +2,4 @@
 
 == Verification Process Architecture
 
-image::architecture.png[]
+image::arch.svg[]

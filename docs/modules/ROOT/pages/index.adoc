@@ -1,17 +1,29 @@
-= Welcome to KYC Solutions!
+= Welcome to Electronic KYC Solutions!
 
 Welcome to KYC! This documentation will help you understand how our solutions work and how you can integrate KYC into your website, app, or signup flow.
 Also, it will explain various kinds of verification services included in this service pack, how they are provided and what kind of data is required from our clients to perform these verifications successfully.
 
 == What is KYC?
 
-KYC (Know Your Customer) is today a significant element in the fight against financial crime and money laundering and *customer identification* is the most critical aspect as it is the first step to better perform in the other stages of the process.
+KYC verification stands for the Know Your Client or the Know Your Customer rule. Abbreviated to KYC, it is an internationally applied procedure that businesses use to verify client identity and assess suitability to reduce the risk of illegal practices, such as money laundering, and comply with banking regulations.
 
-== What KYC provides?
+In the financial and banking sectors, KYC verification stands for a mandatory due diligence process that clients must go through before getting access to services provided by a business, particularly regarding AML (anti-money laundering) checks and detection of Politically Exposed Persons (PEPs).
+
+The latest advances in technology allow companies to carry out their KYC verification services with ease from anywhere in the world. This reduces stress on clients having to send documents via postal services or visit a brick and mortar branch to verify their identity.
+
+== In Which Industries is KYC Applied?
+
+AML and Know Your Customer requirements are applied to all businesses operating in the financial industry, regardless of location, where there is a possibility of money laundering or financial fraud. Companies failing to fulfill their Know Your Customer obligations may fall foul of financial crime legislation.
+
+KYC requirements may apply to your company if it belongs to banks, credit unions, financial institutions, gambling sites and casinos, wallet providers and crypto exchange.
+
+The growing digitization trend in banking and financial services has placed automated KYC verification at the forefront of any business agenda, with many choosing to engage the latest Know Your Client software solutions.
+
+== What Electronic KYC Solutions provides?
 
 We provide *Real-time Identity Verification Services* in order to know your customer identity eliminates risks, online frauds, and financial crimes. Verify ID Documents, Selfies, Biometric data and Mobile 2FA from anywhere in only 1 minute.
 
-== What services KYC includes?
+== What services Electronic KYC Solutions includes?
 
 === Document Verification
 8883 document templates included from 246 countries/territories
@@ -34,6 +46,7 @@ Check visible security features in an ID document in order to decide whether it 
 *_Electronic Document Authentication_*::
 Read data from RFID chips built in electronic documents (ePassport, eID and eDL) via NFC and perform all required authentications (CA, AA, TA, PA). BSI certified.
 
+'''
 === Face Recognition
 *_Verify Remote Presence of User_*::
 Biometric information is extracted from photos and non-disruptive background video (optional) to confirm that a user is who they say they are.
@@ -44,6 +57,7 @@ Perform liveness check using a selfie taken with the user’s smartphone.
 *_Face Matching_*::
 Compare the person holding the ID to the person pictured in the ID document (1:1).
 
+'''
 === Video calls
 *_Video call by schedule_*::
 Make video call by schedule. Calendars of all operators are synchronize with SDK.

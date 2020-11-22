@@ -1,10 +1,20 @@
-= Contract Sign
+= How It Works?
+
+== Contract Sign Process
+
+This diagram shows sequence of steps of Contract Sign Process.
+
+The main parts of common system:
+
+* Client - Mobile SDK or Web SDK that integrated in the vendor application
+* Merchant Application Area - Pack of technical tools that we provide to vendor
+** Application - Middleware server which communicate with SDKs
+** DB - Database which store all data (clients, applications, statistics)
+** Operator - Person who will communicate with clients and will process applications
 
 [plantuml,format=svg,role=sequence]
 ----
 @startuml
-    title CONTRACT SIGN PROCESS
-
     actor "Client (Mobile SDK/Web SDK)" as Client
     box "Merchant Application Area" #efefef
         participant "Application" as Server

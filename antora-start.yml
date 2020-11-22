@@ -1,5 +1,5 @@
 site:
-  title: KYC Solutions Docs
+  title: Electronic KYC Solutions Docs
   start_page: kyc::index.adoc
 content:
   sources:

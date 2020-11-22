@@ -1,10 +1,23 @@
 = How It Works?
 
+== Full Process
+
+This diagram shows how all parts of common system are interacted with each other.
+
+The main parts of common system:
+
+ * Client - Mobile SDK or Web SDK that integrated in the vendor application
+ * Merchant Application Area - Pack of technical tools that we provide to vendor
+    ** Application - Middleware server which communicate with SDKs
+    ** DB - Database which store all data (clients, applications, statistics)
+    ** Operator - Person who will communicate with clients and will process applications
+ * Third-party APIs - Third-party services, for example (SMS provider, BankID, Diia etc)
+ * Merchant System - Vendor's own IT system
+ * ELKYC Applications - Electronic KYC Solutions System
+
 [plantuml,format=svg,role=sequence]
 ----
 @startuml
-title FULL PROCESS
-
     actor "Client (Mobile SDK/Web SDK)" as Client
     box "Merchant Application Area" #efefef
         participant "Application" as Server

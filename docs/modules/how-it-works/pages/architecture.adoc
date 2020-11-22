@@ -1,3 +1,5 @@
-= Verification Process Architecture
+= How It Works?
+
+== Verification Process Architecture
 
 image::architecture.png[]

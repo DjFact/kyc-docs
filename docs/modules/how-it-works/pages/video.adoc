@@ -1,10 +1,21 @@
-= Video Call Verification
+= How It Works?
+
+== Video Call Verification Process
+
+This diagram shows sequence of steps of Video Call Verification Process.
+
+The main parts of common system:
+
+* Client - Mobile SDK or Web SDK that integrated in the vendor application
+* Merchant Application Area - Pack of technical tools that we provide to vendor
+** Application - Middleware server which communicate with SDKs
+** DB - Database which store all data (clients, applications, statistics)
+** Media Server - Service which provides video stream technology
+** Operator - Person who will communicate with clients and will process applications
 
 [plantuml,format=svg,role=sequence]
 ----
 @startuml
-    title VIDEO CALL PROCESS
-
     actor "Client (Mobile SDK/Web SDK)" as Client
     box "Merchant Application Area" #efefef
         participant "Application" as Server

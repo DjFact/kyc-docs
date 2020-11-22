@@ -1,10 +1,19 @@
-= Calendar Synchronization
+= How It Works?
+
+== Calendar Synchronization Process
+
+This diagram shows sequence of steps of Two-Factor Authentication.
+
+The main parts of common system:
+
+* Client - Mobile SDK or Web SDK that integrated in the vendor application
+* Merchant Application Area - Pack of technical tools that we provide to vendor
+** Application - Middleware server which communicate with SDKs
+** DB - Database which store all data (clients, applications, statistics)
 
 [plantuml,format=svg,role=sequence]
 ----
 @startuml
-    title CALENDAR SYNCHRONIZATION PROCESS
-
     actor "Client (Mobile SDK/Web SDK)" as Client
     box "Merchant Application Area" #efefef
         participant "Application" as Server
@@ -16,7 +25,14 @@
         break empty user request data
             Server --x Client : REQUEST VERIFICATION ERROR
         end
-        Server -[#gray]> DB : find <b>user</b>
+        Server -[#gray]> DB : find <b>session</b>
+        activate DB
+            DB -[#gray]->o Server : <b>session</b> or NULL
+        deactivate DB
+        break session == NULL or session.user_id == NULL
+            Server --x Client : VERIFICATION SESSION ERROR
+        end
+        Server -[#gray]> DB : find <b>user.id == session.user_id</b>
         activate DB
             DB -[#gray]->o Server : <b>user</b> or NULL
         deactivate DB

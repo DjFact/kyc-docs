@@ -1,13 +1,25 @@
-= Two-Factor Authentication
+= How It Works?
+
+== Two-Factor Authentication
+
+This diagram shows sequence of steps of Two-Factor Authentication.
+
+The main parts of common system:
+
+* Client - Mobile SDK or Web SDK that integrated in the vendor application
+* Merchant Application Area - Pack of technical tools that we provide to vendor
+** Application - Middleware server which communicate with SDKs
+** DB - Database which store all data (clients, applications, statistics)
+* Third-party APIs - Third-party services, for example (SMS provider, BankID, Diia etc)
 
 [plantuml,format=svg,role=sequence]
 ----
 @startuml
-title TWO-FACTOR AUTHENTICATION
 
     actor "Client (Mobile SDK/Web SDK)" as Client
     box "Merchant Application Area" #efefef
         participant "Application" as Server
+        database "DB" as DB
     end box
     participant "Third-party APIs" as API
 
@@ -36,7 +48,19 @@ title TWO-FACTOR AUTHENTICATION
     end
     API -[#gray]-> Server : ok
     deactivate API
-    Server -[#green]-> Client : AUTHENTICATION COMPLETED
+    Server -[#gray]-> DB : TRANSACTION BEGIN
+    Server -[#gray]>o Server : create new <b>session</b>
+    note right #ffffff
+        --fill user fields--
+        set <b>session.user_phone</b>
+        set <b>session.app_version</b>
+        set <b>user.created</b> = TIMESTAMP()
+    end note
+    Server -[#gray]> DB : TRANSACTION COMMIT
+    activate DB
+        DB -[#gray]-> Server : result
+    deactivate DB
+    Server -[#green]-> Client : <b>session_id</b> AUTHENTICATION COMPLETED
     deactivate Server
 @enduml
 ----
